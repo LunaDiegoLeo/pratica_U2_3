@@ -1,4 +1,4 @@
-let tasks = [];
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 function addTask() {
     const input = document.getElementById("taskInput");
@@ -18,7 +18,7 @@ function addTask() {
     tasks.push(task);
 
     input.value = "";
-
+    saveTasks();
     renderTasks();
 }
 
@@ -46,11 +46,17 @@ function toggleTask(id) {
     tasks = tasks.map(task =>
         task.id === id ? { ...task, completed: !task.completed } : task
     );
-
+    saveTasks();
     renderTasks();
 }
 
 function deleteTask(id) {
     tasks = tasks.filter(task => task.id !== id);
+    saveTasks();
     renderTasks();
+}
+
+
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
