@@ -43,6 +43,7 @@ function renderTasks() {
             <span onclick="toggleTask(${task.id})" style="cursor:pointer; ${task.completed ? 'text-decoration: line-through;' : ''}">
                 ${task.text}
             </span>
+            <button onclick="editTask(${task.id})">✏️</button>
             <button onclick="deleteTask(${task.id})">❌</button>
         `;
 
@@ -73,4 +74,16 @@ function saveTasks() {
 function filterTasks(type) {
     currentFilter = type;
     renderTasks();
+}
+
+function editTask(id) {
+    const task = tasks.find(t => t.id === id);
+
+    const newText = prompt("Editar tarea:", task.text);
+
+    if (newText !== null && newText.trim() !== "") {
+        task.text = newText.trim();
+        saveTasks();
+        renderTasks();
+    }
 }
