@@ -32,3 +32,29 @@ function renderTasks() {
         li.textContent = task.text;
         list.appendChild(li);
     });
+}
+
+function renderTasks() {
+    const list = document.getElementById("taskList");
+    list.innerHTML = "";
+
+    tasks.forEach(task => {
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            <span onclick="toggleTask(${task.id})" style="cursor:pointer; ${task.completed ? 'text-decoration: line-through;' : ''}">
+                ${task.text}
+            </span>
+        `;
+
+        list.appendChild(li);
+    });
+}
+
+function toggleTask(id) {
+    tasks = tasks.map(task =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+    );
+
+    renderTasks();
+}
